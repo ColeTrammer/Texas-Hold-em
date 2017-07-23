@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**********************************
  * Texas Hold-em! Your task is to determine if the cards in the list makes up a
@@ -23,6 +24,31 @@ import java.util.ArrayList;
  ***********************/
 public final class PokerHand {
 	public static boolean IsStraight(ArrayList<Integer> cards) {
+		for (int i = 0; i < cards.size(); i++) {
+			if (cards.get(i) == 14) {
+				cards.set(i, 1);
+			}
+		}
+		Collections.sort(cards);
+		int count = 0;
+		int last = -1;
+		for (int card : cards) {
+			if (count == 0) {
+				count++;
+			} else if (card == 1) {
+				if (last == 13) {
+					count++;
+				}
+			} else if (card - 1 == last) {
+				count++;
+			} else {
+				count = 0;
+			}
+			if (count >= 5) {
+				return true;
+			}
+			last = card;
+		}
 		return false;
 	}
 }
